@@ -60,18 +60,29 @@ var Trash = new Chore ("Trash", "8am", "Wednesday")
 // User Interface
 var toDoList = new ToDoList();
 
+function displayChoreDetails(ToDoListToDisplay){
+  var choresList = $("ul#chores");
+  var htmlForChoreInfo = "";
+  ToDoListToDisplay.chores.forEach(function(chore) {
+    htmlForChoreInfo += "<div class='well'" + chore.id +">" + "<input type='checkbox' name='removeChore'>"+ " " + chore.task + " " + chore.time + " " + chore.day + "</div>";
+  });
+  choresList.html(htmlForChoreInfo);
+}
+
 $(document).ready(function() {
     $("form#new-chore").submit(function(event){
       event.preventDefault();
-      console.log("reached")
       var inputtedTask = $("input#new-task").val();
       var inputtedTime = $("input#new-time").val();
       var inputtedDay = $("input#new-day").val();
       var newChore = new Chore(inputtedTask, inputtedTime, inputtedDay);
-      console.log(addressBook.contacts);
-      ));
+      toDoList.addChore(newChore);
+      displayChoreDetails(toDoList);
+      console.log(ToDoList.chores);
     });
-});
+    $("#remove").click(function(){
+      $("input:checkbox[name=removeChore]:checked").parent().remove();
+      toDoList.deleteChore();
 
-var chore1 = new Chore("dust", "12pm", "Thursday");
-toDoList.addChore(chore1);
+});
+});
